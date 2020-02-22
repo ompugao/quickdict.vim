@@ -1,15 +1,15 @@
-"if exists('g:loaded_quickdict_vim')
-"  finish
-"endif
-"let g:loaded_quickdict_vim = 1
+if exists('g:loaded_quickdict_vim')
+  finish
+endif
+let g:loaded_quickdict_vim = 1
 
 let s:save_cpo = &cpo
 set cpo&vim
 
 function! s:lookupaword(word) abort
 	let encodedword = webapi#http#encodeURI(a:word)
-	let res = webapi#http#get('https://ejje.weblio.jp/content/' + encodedword)
-	if res.status != 400
+	let res = webapi#http#get('https://ejje.weblio.jp/content/' . encodedword)
+	if res.status != 200
 		echomsg res
 		return ''
 	endif
@@ -35,7 +35,9 @@ endfunction
 
 function! s:appendword(word) abort
 	let s = s:lookupaword(a:word)
-	call append(line('$'), s)
+	if s != ''
+		call append(line('.'), s)
+	endif
 endfunction
 
 command! -nargs=+ QuickDictEcho call <sid>echo(<q-args>)
