@@ -26,7 +26,7 @@ function! s:lookupaword(word) abort
 		endif
 		return n.child[0]
 	endfor
-	return 'na'
+	return ''
 endfunction
 
 function! s:echo(word) abort
@@ -40,8 +40,17 @@ function! s:appendword(word) abort
 	endif
 endfunction
 
+function! s:insertlast(word) abort
+	let s = s:lookupaword(a:word)
+	if s != ''
+		execute "normal A : " . s
+	endif
+endfunction
+
+
 command! -nargs=+ QuickDictEcho call <sid>echo(<q-args>)
 command! -nargs=+ QuickDictAppend call <sid>appendword(<q-args>)
+command! -nargs=+ QuickDictInsertLast call <sid>insertlast(<q-args>)
 
 let &cpo = s:save_cpo
 
