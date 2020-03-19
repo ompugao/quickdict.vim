@@ -99,7 +99,11 @@ function! s:quickdict_grep(...) abort
 		echo 'dictionary file not found'
 		return
 	endif
-	let s:quickdict_local_word = a:0 == 0 ? expand('<cword>') : a:1
+	if a:0 != 0 && a:1 == ''
+		let s:quickdict_local_word = expand('<cword>')
+	else
+		let s:quickdict_local_word = a:1
+	endif
 	if executable('rg')
 		let l:command = 'rg -N '
 	elseif executable('ag')
@@ -114,6 +118,6 @@ function! s:quickdict_grep(...) abort
 endfunction
 
 command! -nargs=? QuickDictLocal call <sid>quickdict_grep(<q-args>)
-nmap <Space>rl :<C-u>QuickDictLocal <CR>
+nnoremap <Space>rl :<C-u>QuickDictLocal<CR>
 
 let &cpo = s:save_cpo
