@@ -93,6 +93,7 @@ function! s:exitcb(job, job_status) abort
 	try
 		execute ":ijump /^" . s:quickdict_local_word . "/"
 	catch /E387/
+	catch /E389/
 	endtry
 	let @/='\<' . s:quickdict_local_word . '\>'
 	"let @/='.*' . s:quickdict_local_word . ' .*:'
