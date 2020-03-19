@@ -89,7 +89,11 @@ function! s:exitcb(job, job_status) abort
 	let lines = join(s:quickdict_lines, "\n")
 	execute 'silent :1 put = lines | 1 delete _'
 	setlocal nomodifiable readonly
-	let match = search('^' . s:quickdict_local_word)
+	"let match = search('^' . s:quickdict_local_word)
+	try
+		execute ":ijump /^" . s:quickdict_local_word . "/"
+	catch /E387/
+	endtry
 	let @/='\<' . s:quickdict_local_word . '\>'
 	"let @/='.*' . s:quickdict_local_word . ' .*:'
 endfunction
