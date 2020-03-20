@@ -59,10 +59,12 @@ if !exists('g:quickdict_path')
 	let s:script_dir = expand('<sfile>:p:h')
 	let g:quickdict_path = s:script_dir . '/../dict/EIJIRO-1446_nkf_utf8.txt'
 endif
-
+if !exists('g:quickdict_opencmd')
+	let g:quickdict_opencmd = ':botright split'
+endif
 function! s:openwindow()
 	if bufwinnr(s:bufname) == -1
-		execute ':split ' . s:bufname
+		execute g:quickdict_opencmd . ' ' . s:bufname
 		setlocal nobuflisted
 		setlocal buftype=nofile noswapfile
 		setlocal bufhidden=delete
@@ -109,12 +111,13 @@ function! s:quickdict_grep(...) abort
 	else
 		let s:quickdict_local_word = a:1
 	endif
+	let s:quickdict_local_word = tolower(s:quickdict_local_word)
 	if executable('rg')
-		let l:command = 'rg -N '
+		let l:command = 'rg -N -i '
 	elseif executable('ag')
-		let l:command = 'ag --nonumbers '
+		let l:command = 'ag --nonumbers -i '
 	else
-		let l:command = 'grep -nH '
+		let l:command = 'grep -nHi '
 	endif
 	if s:quickdict_local_word != ''
 		let s:quickdict_lines = []
