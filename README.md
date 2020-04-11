@@ -2,4 +2,5 @@
 
 let's look up a word in online/offline dictionaries
 
-[![asciicast](https://asciinema.org/a/311555.svg)](https://asciinema.org/a/311555)
+[![asciicast](https://asciinema.org/a/VAYmPqznpOSSULqer2TH9THCz.svg)](https://asciinema.org/a/VAYmPqznpOSSULqer2TH9THCz)
+
